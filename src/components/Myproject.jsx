@@ -6,7 +6,7 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { removeProjectApi, userProjectApi } from '../service/allApi'
 import { Link } from 'react-router-dom'
-import { addResponseContext } from '../context/ContextShare'
+import { addResponseContext, editProjectResponse } from '../context/ContextShare'
 
 
 
@@ -15,6 +15,7 @@ function Myproject() {
   const [deleteResponse, setDeleteResponse] = useState([])
 
   const {addResponse} = useContext(addResponseContext)
+  const {editResponse} = useContext(editProjectResponse)
 
 
   const getUserProject = async () => {
@@ -62,7 +63,7 @@ function Myproject() {
 
   useEffect(() => {
     getUserProject()
-  }, [addResponse, deleteResponse])
+  }, [addResponse, deleteResponse,editResponse])
 
   return (
     <>
@@ -76,7 +77,7 @@ function Myproject() {
             <div className="p-3 bg-light mt-3 rounded d-flex align-items-center justify-content-between">
               <h5>{item?.title}</h5>
               <div className='d-flex'>
-                <Edit />
+                <Edit projects={item} />
                 <Link to={item?.website} target='_blank'><FontAwesomeIcon icon={faGlobe} className='me-4 text-warning' /></Link>
                 <Link to={item?.github} target='_blank'><FontAwesomeIcon icon={faGithub} className='me-4 text-success' /></Link>
                <Link> <FontAwesomeIcon onClick={()=>handleDelete(item?._id)} icon={faTrash} className='me-4 text-danger' /></Link>
